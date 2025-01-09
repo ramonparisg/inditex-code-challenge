@@ -1,0 +1,20 @@
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///testdb
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always # Ensures schema and data scripts are executed
+      data-locations: sql/data.sql
+      schema-locations: sql/schema.sql
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.r2dbc.connection: DEBUG  # Logs connection details for R2DBC
+    org.springframework.boot.sql.init: DEBUG    # Logs SQL initialization details
+    io.r2dbc.h2: DEBUG                           # Logs R2DBC H2-specific operations
+    org.springframework: INFO
