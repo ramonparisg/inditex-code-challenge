@@ -11,6 +11,7 @@ Author: Ramón José París González
 - Cucumber for acceptance / integration tests
 - JUnit5 and Mockito for unit testing
 - H2 database
+- Mapstruct for mapping objects through core and infra layers
 
 ### Execute the project
 
