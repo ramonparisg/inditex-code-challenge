@@ -1,4 +1,4 @@
-# Indetex code challenge
+# Inditex code challenge
 
 Author: Ramón José París González
 
@@ -50,6 +50,8 @@ Make sure that you have installed Java 21 to run the project.
     - Separation of `infrastructure` and `core` layer
     - Usage of primary and secondary adapter as well as UseCases and Ports for communication with infrastructure
     - Creation of domain object and mappings for not coupling Infrastructure objects with Domain objects
+
+
 ![arch.png](assets/arch.png)
 
 
