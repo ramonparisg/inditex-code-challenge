@@ -8,6 +8,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+/**
+ * The CriteriaToSqlConverter class is responsible for converting a {@code Criteria} object into a SQL query
+ * that can be executed using a {@code DatabaseClient}.
+ *
+ * This class takes a criteria object, which represents a set of filtering conditions, and a table name.
+ * It processes the criteria filters to generate a SQL query with an optional WHERE clause, and binds
+ * the necessary parameters for execution.
+ */
 @Slf4j
 @Component
 public class CriteriaToSqlConverter {
