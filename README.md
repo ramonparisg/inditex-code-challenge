@@ -43,6 +43,35 @@ Make sure that you have installed Java 21 to run the project.
    ```bash
    ./gradlew clean build
    ```
+  
+### Rest Call:
+```bash
+curl --location 'localhost:8080/v1/prices?datetime=2020-06-14T10:00:00&productId=35455&brandId=1'
+```
+
+Expected responses:
+- 200 OK:
+```JSON
+{
+  "productId": "35455",
+  "brandId": "1",
+  "startDate": "2020-06-14T00:00:00",
+  "endDate": "2020-12-31T23:59:59",
+  "priceId": "1",
+  "price": 35.5,
+  "currency": "EUR"
+}
+```
+
+- 400 Bad request:
+```text
+400 BAD_REQUEST "Required query parameter 'brandId' is not present."
+```
+
+- 404 Not found
+- 500 Internal server error
+
+
 
 ### Architecture decisions
 
@@ -68,6 +97,10 @@ Make sure that you have installed Java 21 to run the project.
   - Usage of Spring Reactive. With special focus in non-blocking behaviors.
   - Usage of `Webflux` for handling `Monos` and `Fluxes`
   - Usage of `r2dbc` for non blocking database operations
+
+
+- **Implementation of a ControllerAdvicer**: 
+  - Making sure that there is no unexpected error trace that could give insights of technologies used in the API
 
 
 - **Developed using TDD principles**
