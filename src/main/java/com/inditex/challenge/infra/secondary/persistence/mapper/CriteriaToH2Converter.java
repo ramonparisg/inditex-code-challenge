@@ -1,16 +1,24 @@
 package com.inditex.challenge.infra.secondary.persistence.mapper;
 
-import com.inditex.challenge.core.domain.criteria.CriteriaDomain;
+import com.inditex.challenge.core.domain.criteria.Criteria;
 import com.inditex.challenge.core.domain.criteria.CriteriaFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.r2dbc.core.DatabaseClient;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
 @Slf4j
+@Component
 public class CriteriaToH2Converter {
 
-    public static DatabaseClient.GenericExecuteSpec convert(DatabaseClient databaseClient, String tableName, CriteriaDomain<?> criteria) {
+    private final DatabaseClient databaseClient;
+
+    public CriteriaToH2Converter(DatabaseClient databaseClient) {
+        this.databaseClient = databaseClient;
+    }
+
+    public DatabaseClient.GenericExecuteSpec convert(Criteria<?> criteria, String tableName) {
         var sql = String.format("SELECT * FROM %s", tableName);
 
         final var hasFilters = criteria != null && !criteria.getFilters().isEmpty();
@@ -23,7 +31,7 @@ public class CriteriaToH2Converter {
         return bindParameters(databaseClient, criteria, sql);
     }
 
-    private static DatabaseClient.GenericExecuteSpec bindParameters(DatabaseClient databaseClient, CriteriaDomain<?> criteria, String sql) {
+    private static DatabaseClient.GenericExecuteSpec bindParameters(DatabaseClient databaseClient, Criteria<?> criteria, String sql) {
         var executeSpec = databaseClient.sql(sql);
         for (CriteriaFilter<?> filter : criteria.getFilters()) {
             executeSpec = executeSpec.bind(filter.getField().toString(), filter.getValue());
@@ -32,7 +40,7 @@ public class CriteriaToH2Converter {
     }
 
 
-    private static String appendWhereClause(CriteriaDomain<?> criteria, String sql) {
+    private static String appendWhereClause(Criteria<?> criteria, String sql) {
         final String whereClause = criteria.getFilters()
                 .stream()
                 .map(filter -> String.format("%s %s :%s", filter.getField(), filter.getOperator().getValue(), filter.getField()))

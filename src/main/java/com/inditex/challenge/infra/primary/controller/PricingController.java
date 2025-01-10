@@ -21,7 +21,7 @@ public class PricingController {
     private final PriceControllerMapper priceControllerMapper;
 
     @GetMapping("/v1/prices")
-    Mono<ResponseEntity<GetPricingResponseDto>> pricing(
+    Mono<ResponseEntity<GetPricingResponseDto>> getPrice(
             @RequestParam Integer brandId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime datetime,
             @RequestParam Integer productId

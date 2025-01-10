@@ -1,7 +1,7 @@
 package com.inditex.challenge.core.usecase;
 
 import com.inditex.challenge.core.domain.Price;
-import com.inditex.challenge.core.domain.criteria.CriteriaDomain;
+import com.inditex.challenge.core.domain.criteria.Criteria;
 import com.inditex.challenge.core.domain.criteria.CriteriaFilter;
 import com.inditex.challenge.core.domain.criteria.CriteriaOrder;
 import com.inditex.challenge.core.domain.criteria.filters.PriceFieldFilter;
@@ -28,19 +28,19 @@ public class GetFilteredPriceService implements GetFilteredPriceUseCase{
 
         return pricePersistencePort
                 .matching(criteria)
-                .reduce(GetFilteredPriceService::getHighestPriority);
+                .reduce(GetFilteredPriceService::getPriceWithHigherPriority);
     }
 
-    private static Price getHighestPriority(Price p1, Price p2) {
+    private static Price getPriceWithHigherPriority(Price p1, Price p2) {
         return p1.getPriority() > p2.getPriority() ? p1 : p2;
     }
 
-    private static CriteriaDomain<PriceFieldFilter> buildCriteria(FilterCmd filterCmd) {
+    private static Criteria<PriceFieldFilter> buildCriteria(FilterCmd filterCmd) {
         final var brandFilter = new CriteriaFilter<>(BRAND_ID, EQUALS, filterCmd.getBrandId());
         final var startDateFilter = new CriteriaFilter<>(START_DATE, LESS_THAN_EQUALS, filterCmd.getApplicationDate());
         final var endDateFilter = new CriteriaFilter<>(END_DATE, GREATER_THAN_EQUALS, filterCmd.getApplicationDate());
         final var productFilter = new CriteriaFilter<>(PRODUCT_ID, EQUALS, filterCmd.getProductId());
 
-        return new CriteriaDomain<>(List.of(brandFilter, startDateFilter, endDateFilter, productFilter), 1, new CriteriaOrder<>(PRIORITY, ASC));
+        return new Criteria<>(List.of(brandFilter, startDateFilter, endDateFilter, productFilter), 1, new CriteriaOrder<>(PRIORITY, ASC));
     }
 }

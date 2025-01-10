@@ -1,9 +1,9 @@
 package com.inditex.challenge.infra.secondary.persistence.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Table("PRICES")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PriceEntityDto {
 
     @Column("PRICE_LIST")

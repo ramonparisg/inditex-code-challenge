@@ -5,11 +5,8 @@ import lombok.Value;
 import java.util.List;
 
 @Value
-public class CriteriaDomain<T> {
+public class Criteria<T> {
     List<CriteriaFilter<T>> filters;
     Integer limit;
     CriteriaOrder<T> order;
-
-
-
 }

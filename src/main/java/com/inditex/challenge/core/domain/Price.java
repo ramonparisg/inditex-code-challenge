@@ -6,7 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data // todo ver si puedo dejar esto como @Value y como object values
+@Data
 @Builder
 public class Price {
 
