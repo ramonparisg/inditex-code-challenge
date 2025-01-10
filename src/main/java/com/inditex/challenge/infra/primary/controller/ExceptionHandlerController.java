@@ -12,11 +12,6 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class ExceptionHandlerController {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public Mono<ResponseEntity<String>> handleBadRequestException(final IllegalArgumentException exception) {
-        return Mono.just(ResponseEntity.badRequest().body(exception.getMessage()));
-    }
-
     @ExceptionHandler(ServerWebInputException.class)
     public Mono<ResponseEntity<String>> handleMissingRequestValueException(ServerWebInputException ex) {
         return Mono.just(ResponseEntity

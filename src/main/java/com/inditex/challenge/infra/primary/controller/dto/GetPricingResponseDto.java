@@ -18,4 +18,5 @@ public class GetPricingResponseDto {
     private String endDate;
     private String priceId;
     private BigDecimal price;
+    private String currency;
 }

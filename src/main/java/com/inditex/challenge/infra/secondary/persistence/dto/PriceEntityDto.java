@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 public class PriceEntityDto {
 
     @Column("PRICE_LIST")
-    @Id
-    private Long priceId;
+//    @Id
+    private Integer priceList;
 
     @Column("BRAND_ID")
     private Integer brandId;
@@ -40,5 +40,5 @@ public class PriceEntityDto {
     private BigDecimal price;
 
     @Column("CURR")
-    private String currency;
+    private String curr;
 }

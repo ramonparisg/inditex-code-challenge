@@ -27,7 +27,7 @@ public class GetFilteredPriceService implements GetFilteredPriceUseCase{
         final var criteria = buildCriteria(filterCmd);
 
         return pricePersistencePort
-                .matching(filterCmd)
+                .matching(criteria)
                 .reduce(GetFilteredPriceService::getHighestPriority);
     }
 
@@ -37,8 +37,8 @@ public class GetFilteredPriceService implements GetFilteredPriceUseCase{
 
     private static CriteriaDomain<PriceFieldFilter> buildCriteria(FilterCmd filterCmd) {
         final var brandFilter = new CriteriaFilter<>(BRAND_ID, EQUALS, filterCmd.getBrandId());
-        final var startDateFilter = new CriteriaFilter<>(START_DATE, GREATER_THAN_EQUALS, filterCmd.getApplicationDate());
-        final var endDateFilter = new CriteriaFilter<>(END_DATE, LESS_THAN_EQUALS, filterCmd.getApplicationDate());
+        final var startDateFilter = new CriteriaFilter<>(START_DATE, LESS_THAN_EQUALS, filterCmd.getApplicationDate());
+        final var endDateFilter = new CriteriaFilter<>(END_DATE, GREATER_THAN_EQUALS, filterCmd.getApplicationDate());
         final var productFilter = new CriteriaFilter<>(PRODUCT_ID, EQUALS, filterCmd.getProductId());
 
         return new CriteriaDomain<>(List.of(brandFilter, startDateFilter, endDateFilter, productFilter), 1, new CriteriaOrder<>(PRIORITY, ASC));
