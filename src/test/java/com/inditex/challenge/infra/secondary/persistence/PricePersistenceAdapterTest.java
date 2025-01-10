@@ -6,7 +6,7 @@ import com.inditex.challenge.core.domain.criteria.CriteriaFilter;
 import com.inditex.challenge.core.domain.criteria.CriteriaOrder;
 import com.inditex.challenge.core.domain.criteria.filters.PriceFieldFilter;
 import com.inditex.challenge.infra.secondary.persistence.dto.PriceEntityDto;
-import com.inditex.challenge.infra.secondary.persistence.mapper.CriteriaToH2Converter;
+import com.inditex.challenge.infra.secondary.persistence.mapper.CriteriaToSqlConverter;
 import com.inditex.challenge.infra.secondary.persistence.mapper.PriceEntityMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ class PricePersistenceAdapterTest {
     private PriceEntityMapper priceEntityMapper;
 
     @Mock
-    private CriteriaToH2Converter criteriaConverter;
+    private CriteriaToSqlConverter criteriaConverter;
 
     @Mock
     private GenericExecuteSpec executeSpec;

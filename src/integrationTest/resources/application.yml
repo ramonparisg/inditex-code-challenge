@@ -11,10 +11,3 @@ spring:
 
 server:
   port: 8080
-
-logging:
-  level:
-    org.springframework.r2dbc.connection: DEBUG  # Logs connection details for R2DBC
-    org.springframework.boot.sql.init: DEBUG    # Logs SQL initialization details
-    io.r2dbc.h2: DEBUG                           # Logs R2DBC H2-specific operations
-    org.springframework: INFO

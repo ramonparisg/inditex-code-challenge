@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class CriteriaToH2Converter {
+public class CriteriaToSqlConverter {
 
     private final DatabaseClient databaseClient;
 
-    public CriteriaToH2Converter(DatabaseClient databaseClient) {
+    public CriteriaToSqlConverter(DatabaseClient databaseClient) {
         this.databaseClient = databaseClient;
     }
 

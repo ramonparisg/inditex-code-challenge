@@ -30,6 +30,11 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+
     integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
@@ -74,9 +79,37 @@ tasks.named('test') {
 tasks.register('integrationTest', Test) {
     description = 'Run integration tests'
     group = 'verification'
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+//    testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
     shouldRunAfter test
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.integrationTest.runtimeClasspath
+            args = [
+                    '--plugin', 'pretty',
+                    '--plugin', 'html:target/cucumber-report.html',
+                    '--glue', 'com.inditex.challenge',
+                    'src/integrationTest/resources/features']
+        }
+    }
+}
+
+tasks.register('cucumberCli') {
+    dependsOn assemble, testClasses
+    description = 'Run integration tests'
+    group = 'verification'
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.integrationTest.runtimeClasspath
+            args = [
+                    '--plugin', 'pretty',
+                    '--plugin', 'html:target/cucumber-report.html',
+                    '--glue', 'com.inditex.challenge',
+                    'src/integrationTest/resources/features']
+        }
+    }
 }
 
 check.dependsOn integrationTest

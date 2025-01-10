@@ -5,7 +5,7 @@ import com.inditex.challenge.core.domain.criteria.Criteria;
 import com.inditex.challenge.core.domain.criteria.filters.PriceFieldFilter;
 import com.inditex.challenge.core.ports.PricePersistencePort;
 import com.inditex.challenge.infra.secondary.persistence.dto.PriceEntityDto;
-import com.inditex.challenge.infra.secondary.persistence.mapper.CriteriaToH2Converter;
+import com.inditex.challenge.infra.secondary.persistence.mapper.CriteriaToSqlConverter;
 import com.inditex.challenge.infra.secondary.persistence.mapper.PriceEntityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import reactor.core.publisher.Flux;
 public class PricePersistenceAdapter implements PricePersistencePort {
 
     private final PriceEntityMapper priceEntityMapper;
-    private final CriteriaToH2Converter criteriaConverter;
+    private final CriteriaToSqlConverter criteriaConverter;
 
     private static final String PRICE_TABLE_NAME = "PRICES";
 
