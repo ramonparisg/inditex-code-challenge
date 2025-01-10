@@ -7,8 +7,11 @@ import com.inditex.challenge.infra.secondary.persistence.mapper.PriceEntityMappe
 import com.inditex.challenge.infra.secondary.persistence.repository.PriceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.relational.core.query.Criteria;
+import org.springframework.data.relational.core.query.Query;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 @RequiredArgsConstructor
 @Component
@@ -17,11 +20,26 @@ public class PricePersistenceAdapter implements PricePersistencePort {
 
     private final PriceRepository priceRepository;
     private final PriceEntityMapper priceEntityMapper;
+    private final DatabaseClient databaseClient;
 
-    // todo acoplar FilterCmd acá está mal. Buscar workaround
     @Override
-    public Mono<Price> getPriceByFilter(GetFilteredPriceUseCase.FilterCmd filterCmd) {
-        return priceRepository.findById(1L)
+    public Flux<Price> matching(GetFilteredPriceUseCase.FilterCmd filterCmd) {
+        Criteria criteria = Criteria.where("BRAND_ID").is(filterCmd.getBrandId());
+
+        Query query = Query.query(criteria);
+
+        return priceRepository.findAllByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateLessThanEqual(
+                filterCmd.getBrandId(), filterCmd.getProductId(), filterCmd.getApplicationDate(), filterCmd.getApplicationDate())
                 .map(priceEntityMapper::toDomain);
+
+//        return priceRepository.findAllByFilter(filterCmd.getBrandId(), filterCmd.getApplicationDate(), filterCmd.getProductId())
+//                .map(priceEntityMapper::toDomain);
+
+//        return databaseClient
+//                .from(PriceEntityDto.class)
+//                .matching(query)
+//                .all()
+//                .map(priceEntityMapper::toDomain);
+//                ;
     }
 }

@@ -31,10 +31,10 @@ public class PriceEntityDto {
     private LocalDateTime endDate;
 
     @Column("PRODUCT_ID")
-    private String productId;
+    private Integer productId;
 
     @Column("PRIORITY")
-    private int priority;
+    private Integer priority;
 
     @Column("PRICE")
     private BigDecimal price;
